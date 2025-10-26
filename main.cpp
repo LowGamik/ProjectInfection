@@ -1,9 +1,3 @@
-#ifdef _WIN32
-    #define CLEAR_SCREEN() system("cls")
-#else
-    #define CLEAR_SCREEN() system("clear")
-#endif
-
 #include <iostream>
 #include <string>
 #include <vector>
@@ -11,6 +5,36 @@
 #include <chrono>
 using namespace std;
 using namespace this_thread;
+
+#ifdef _WIN32
+    #define CLEAR_SCREEN() system("cls")
+#else
+    #define CLEAR_SCREEN() system("clear")
+#endif
+
+
+typedef enum{
+    NONE,
+    MINOR,
+    NEGLEGABLE,
+    MEDIUM,
+    MAJOR,
+    CRITICAL
+}InfectionLevel;
+
+typedef enum{
+    NORMAL,
+    BLOODY,
+    DARK,
+    PERFECT
+}InfectionLook;
+
+class Signs{
+    private:
+        InfectionLevel level;
+        InfectionLook look;
+    public:
+};
 
 class Guard{
     private:
@@ -39,6 +63,7 @@ class Visitor{
         string name;
         bool isInfected;
         bool isVacinated;
+        
     public:
 
 };
