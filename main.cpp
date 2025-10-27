@@ -1,10 +1,12 @@
+#include <cstddef>
 #include <iostream>
+#include <stdlib.h>
 #include <string>
 #include <vector>
 #include <thread>
 #include <chrono>
+#include <ctime>
 using namespace std;
-using namespace this_thread;
 
 #ifdef _WIN32
     #define CLEAR_SCREEN() system("cls")
@@ -16,7 +18,7 @@ using namespace this_thread;
 typedef enum{
     NONE,
     MINOR,
-    NEGLEGABLE,
+    NEGLIGIBLE,
     MEDIUM,
     MAJOR,
     CRITICAL
@@ -24,23 +26,53 @@ typedef enum{
 
 typedef enum{
     NORMAL,
+    PERFECT,
     BLOODY,
-    DARK,
-    PERFECT
+    DARK
 }InfectionLook;
+
+InfectionLook intToInfectionLook(int number);
+InfectionLevel intToInfectionLevel(int number);
 
 class Signs{
     private:
         InfectionLevel level;
         InfectionLook look;
     public:
+        void makeInfection(bool isInfected){
+            if(isInfected==true){
+                if((rand()%2)==1){
+                    level = intToInfectionLevel(rand()%5+1);
+
+                }else{
+
+                }
+            }
+        }
+};
+
+class Head{
+
+};
+
+class Torso{
+
+};
+
+class Hands{
+
+};
+
+class Legs{
+
 };
 
 class Guard{
     private:
         string name;
-        int sanity = 80;
+        int sanity;
     public:
+        Guard(): name(""), sanity(45){}
         void setName(){
             cout << "What is your characters name?" <<endl;
             getline(cin, name);
@@ -50,6 +82,12 @@ class Guard{
         }
         void setSanity(int inputSanity){
             sanity = inputSanity;
+        }
+        void addSanity(int inputSanity){
+            sanity += inputSanity;
+        }
+        void reduceSanity(int inputSanity){
+            sanity -= inputSanity;
         }
         int getSanity(){
             return sanity;
@@ -63,7 +101,12 @@ class Visitor{
         string name;
         bool isInfected;
         bool isVacinated;
-        
+        Head head;
+        Torso torso;
+        Hands leftHand;
+        Hands rightHand;
+        Legs leftLeg;
+        Legs RightLeg;
     public:
 
 };
@@ -75,6 +118,8 @@ int main(){
     vector<Visitor> visitors;
     visitors.resize(3);
 
+    srand(time(NULL));
+
     CLEAR_SCREEN();
 
     cout << "hello, world!" << endl;
@@ -82,14 +127,35 @@ int main(){
 
     CLEAR_SCREEN();
 
-    typeWriter("Guard's name is " + player.getName(), 100);
+    typeWriter(player.getName() + "'s sanity is " + to_string(player.getSanity()), 50);
     return 0;
 }
 
 void typeWriter(const string& sentence, int timeMillisecconds) {
     for (char c : sentence) {
         cout << c << flush;
-        sleep_for(chrono::milliseconds(timeMillisecconds));
+        this_thread::sleep_for(chrono::milliseconds(timeMillisecconds));
     }
     cout << endl;
+}
+
+InfectionLook intToInfectionLook(int number){
+    switch (number) {
+        case 0: return NORMAL;
+        case 1: return PERFECT;
+        case 2: return BLOODY;
+        case 3: return DARK;
+        default: return NORMAL;
+    }
+}
+InfectionLevel intToInfectionLevel(int number){
+    switch (number) {
+        case 0: return NONE;
+        case 1: return MINOR;
+        case 2: return NEGLIGIBLE;
+        case 3: return MEDIUM;
+        case 4: return MAJOR;
+        case 5: return CRITICAL;
+        default: return NONE;
+    }
 }
