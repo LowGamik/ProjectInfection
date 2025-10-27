@@ -61,6 +61,14 @@ class Signs{
         }
         InfectionLevel getLevel() const { return level; }
         InfectionLook getLook() const { return look; }
+
+        bool isDangerousInfection(bool isVaccinated) const {
+        if(!isVaccinated) {
+            return level >= MEDIUM; // Non-vaccinated: MEDIUM or higher is dangerous
+        } else {
+            return level >= MAJOR;  // Vaccinated: Only MAJOR or CRITICAL is dangerous
+        }
+    }
 };
 
 class Head{
