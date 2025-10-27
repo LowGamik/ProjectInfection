@@ -33,22 +33,34 @@ typedef enum{
 
 InfectionLook intToInfectionLook(int number);
 InfectionLevel intToInfectionLevel(int number);
+void typeWriter(const string& sentence, int timeMillisecconds);
 
 class Signs{
     private:
         InfectionLevel level;
         InfectionLook look;
     public:
-        void makeInfection(bool isInfected){
-            if(isInfected==true){
-                if((rand()%2)==1){
-                    level = intToInfectionLevel(rand()%5+1);
-
-                }else{
-
+        void makeInfection(bool isInfected, bool isVaccinated){
+            if(isInfected){
+                if(isVaccinated){
+                    level = intToInfectionLevel(rand()%2+1);
+                    look = intToInfectionLook(rand()%2);
+                } else {
+                    if((rand()%2)==1){
+                    level = intToInfectionLevel(rand()%4+1);
+                    look = intToInfectionLook(rand()%2+1);
+                    }else{
+                    level = intToInfectionLevel(rand()%4+2);
+                    look = intToInfectionLook(rand()%3+1);
+                    }
                 }
+            }else{
+                level = intToInfectionLevel(rand()%3);
+                look = intToInfectionLook(rand()%3);
             }
         }
+        InfectionLevel getLevel() const { return level; }
+        InfectionLook getLook() const { return look; }
 };
 
 class Head{
@@ -100,18 +112,18 @@ class Visitor{
     private:
         string name;
         bool isInfected;
-        bool isVacinated;
+        bool isVaccinated;
         Head head;
         Torso torso;
         Hands leftHand;
         Hands rightHand;
         Legs leftLeg;
-        Legs RightLeg;
+        Legs rightLeg;
     public:
 
 };
 
-void typeWriter(const string& sentence, int timeMillisecconds);
+
 
 int main(){
     Guard player;
